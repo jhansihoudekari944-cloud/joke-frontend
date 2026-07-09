@@ -2,14 +2,22 @@ import gradio as gr
 import requests
 import os
 FastAPI_URL = "https://joke-proj.onrender.com/joke"
-def joke(prompt,category,language):
-    response=requests.post(FastAPI_URL,json={"prompt":prompt,
-    "category":category,
-    "language":language})
-    if response.status_code==200:
-        return response.json()["answer"]
-    else:
-        return "Error conecting FastAPI"
+def joke(prompt, category, language):
+    try:
+        response = requests.post(
+            FastAPI_URL,
+            json={
+                "prompt": prompt,
+                "category": category,
+                "language": language
+            },
+            timeout=60
+        )
+
+        return f"Status Code: {response.status_code}\n\nResponse:\n{response.text}"
+
+    except Exception as e:
+        return f"Exception: {e}"
 demo=gr.Interface(
     fn=joke,
     inputs=[gr.Textbox(label="Enter prompt"),
