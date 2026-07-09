@@ -33,7 +33,6 @@ demo=gr.Interface(
     )
     ],
 outputs=gr.Textbox(label="Anser here",lines=20))
-demo.launch()
 if __name__ == "__main__":
     demo.launch(
         server_name="0.0.0.0",
